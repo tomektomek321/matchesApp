@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrackerLibrary
+namespace TrackerLibrary.Models
 {
     /// <summary>
     /// Represents one tournament, with all of the rounds, matchups, prizes and outcomes.

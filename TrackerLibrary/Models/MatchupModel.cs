@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrackerLibrary
+namespace TrackerLibrary.Models
 {
     /// <summary>
     /// Represents one match in the tournament.
@@ -38,9 +38,10 @@ namespace TrackerLibrary
 
         public string DisplayName
         {
+            
             get
             {
-                string output = "";
+                /*string output = "";
 
                 foreach (MatchupEntryModel me in Entries)
                 {
@@ -60,9 +61,9 @@ namespace TrackerLibrary
                         output = "Matchup Not Yet Determined";
                         break;
                     }
-                }
+                }*/
 
-                return output;
+                return ""; // return output;
             }
         }
     }
