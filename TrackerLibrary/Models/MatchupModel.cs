@@ -39,8 +39,7 @@ namespace TrackerLibrary.Models
         public string DisplayName
         {
             
-            get
-            {
+            get {
                 /*string output = "";
 
                 foreach (MatchupEntryModel me in Entries)
