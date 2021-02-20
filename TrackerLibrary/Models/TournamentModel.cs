@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrackerLibrary.Models
-{
+namespace TrackerLibrary.Models {
     /// <summary>
     /// Represents one tournament, with all of the rounds, matchups, prizes and outcomes.
     /// </summary>
-    public class TournamentModel
-    {
+    public class TournamentModel {
         public event EventHandler<DateTime> OnTournamentComplete;
 
         /// <summary>
@@ -38,8 +36,7 @@ namespace TrackerLibrary.Models
         /// </summary>
         public List<List<MatchupModel>> Rounds { get; set; } = new List<List<MatchupModel>>();
 
-        public void CompleteTournament()
-        {
+        public void CompleteTournament() {
             OnTournamentComplete?.Invoke(this, DateTime.Now);
         }
     }

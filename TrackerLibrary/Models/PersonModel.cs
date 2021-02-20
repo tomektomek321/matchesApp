@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrackerLibrary.Models
-{
+namespace TrackerLibrary.Models {
     public class PersonModel {
 
         /// <summary>
@@ -33,10 +32,8 @@ namespace TrackerLibrary.Models
         /// <summary>
         /// The first name and last name combined as one string.
         /// </summary>
-        public string FullName
-        {
-            get
-            {
+        public string FullName {
+            get {
                 return $"{ FirstName } { LastName }";
             }
         }

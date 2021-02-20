@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrackerLibrary.Models
-{
+namespace TrackerLibrary.Models {
     /// <summary>
     /// Represents what the prize is for the given place.
     /// </summary>
-    public class PrizeModel
-    {
+    public class PrizeModel {
         /// <summary>
         /// The unique identifier for the prize.
         /// </summary>
@@ -37,8 +35,7 @@ namespace TrackerLibrary.Models
         /// <summary>
         /// Blank Constructor
         /// </summary>
-        public PrizeModel()
-        {
+        public PrizeModel() {
         }
 
         /// <summary>
@@ -49,8 +46,7 @@ namespace TrackerLibrary.Models
         /// <param name="placeNumber"></param>
         /// <param name="prizeAmount"></param>
         /// <param name="prizePercentage"></param>
-        public PrizeModel(string placeName, string placeNumber, string prizeAmount, string prizePercentage)
-        {
+        public PrizeModel(string placeName, string placeNumber, string prizeAmount, string prizePercentage) {
             PlaceName = placeName;
 
             int.TryParse(placeNumber, out int placeNumberValue);

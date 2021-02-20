@@ -6,16 +6,20 @@ using System.Threading.Tasks;
 using System.Configuration;
 using TrackerLibrary.DataAccess;
 
-namespace TrackerLibrary
-{
-    public static class GlobalConfig
-    {
+namespace TrackerLibrary {
+    public static class GlobalConfig {
+
+        public const string PrizesFile = "PrizeModel.csv";
+        public const string PeopleFile = "PersonModel.csv";
+        public const string TeamFile = "TeamModel.csv";
+        public const string TournamentFile = "TournamentModel.csv";
+        public const string MatchupFile = "MatchupModel.csv";
+        public const string MatchupEntryFile = "MatchupEntryModel.csv";
+
         public static IDataConnection Connection { get; private set; }
 
-        public static void InitializeConnections(DatabaseType db)
-        {
-            switch (db)
-            {
+        public static void InitializeConnections(DatabaseType db) {
+            switch (db) {
                 /*case DatabaseType.Sql:
                     SqlConnector sql = new SqlConnector();
                     Connection = sql;
@@ -29,8 +33,7 @@ namespace TrackerLibrary
             }
         }
 
-        public static string CnnString(string name)
-        {
+        public static string CnnString(string name) {
             return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
     }

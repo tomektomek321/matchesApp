@@ -1,7 +1,5 @@
-﻿namespace TrackerUI
-{
-    partial class CreateTeamForm
-    {
+﻿namespace TrackerUI {
+    partial class CreateTeamForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -11,23 +9,20 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
                 components.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent() {
             this.teamNameValue = new System.Windows.Forms.TextBox();
             this.teamNameLabel = new System.Windows.Forms.Label();
             this.headerLabel = new System.Windows.Forms.Label();
@@ -309,28 +304,28 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.TextBox teamNameValue;
-		private System.Windows.Forms.Label teamNameLabel;
-		private System.Windows.Forms.Label headerLabel;
-		private System.Windows.Forms.Button addMemberButton;
-		private System.Windows.Forms.ComboBox selectTeamMemberDropDown;
-		private System.Windows.Forms.Label selectTeamMemberLabel;
-		private System.Windows.Forms.GroupBox addNewMemberGroupBox;
-		private System.Windows.Forms.TextBox lastNameValue;
-		private System.Windows.Forms.Label lastNameLabel;
-		private System.Windows.Forms.TextBox firstNameValue;
-		private System.Windows.Forms.Label firstNameLabel;
-		private System.Windows.Forms.TextBox cellphoneValue;
-		private System.Windows.Forms.Label cellphoneLabel;
-		private System.Windows.Forms.TextBox emailValue;
-		private System.Windows.Forms.Label emailLabel;
-		private System.Windows.Forms.Button createMemberButton;
-		private System.Windows.Forms.ListBox teamMembersListBox;
-		private System.Windows.Forms.Button removeSelectedMemberButton;
-		private System.Windows.Forms.Button createTeamButton;
+        private System.Windows.Forms.TextBox teamNameValue;
+        private System.Windows.Forms.Label teamNameLabel;
+        private System.Windows.Forms.Label headerLabel;
+        private System.Windows.Forms.Button addMemberButton;
+        private System.Windows.Forms.ComboBox selectTeamMemberDropDown;
+        private System.Windows.Forms.Label selectTeamMemberLabel;
+        private System.Windows.Forms.GroupBox addNewMemberGroupBox;
+        private System.Windows.Forms.TextBox lastNameValue;
+        private System.Windows.Forms.Label lastNameLabel;
+        private System.Windows.Forms.TextBox firstNameValue;
+        private System.Windows.Forms.Label firstNameLabel;
+        private System.Windows.Forms.TextBox cellphoneValue;
+        private System.Windows.Forms.Label cellphoneLabel;
+        private System.Windows.Forms.TextBox emailValue;
+        private System.Windows.Forms.Label emailLabel;
+        private System.Windows.Forms.Button createMemberButton;
+        private System.Windows.Forms.ListBox teamMembersListBox;
+        private System.Windows.Forms.Button removeSelectedMemberButton;
+        private System.Windows.Forms.Button createTeamButton;
     }
 }

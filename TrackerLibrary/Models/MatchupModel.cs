@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrackerLibrary.Models
-{
+namespace TrackerLibrary.Models {
     /// <summary>
     /// Represents one match in the tournament.
     /// </summary>
-    public class MatchupModel
-    {
+    public class MatchupModel {
         /// <summary>
         /// The unique identifier for the match.
         /// </summary>
@@ -36,9 +34,8 @@ namespace TrackerLibrary.Models
         /// </summary>
         public int MatchupRound { get; set; }
 
-        public string DisplayName
-        {
-            
+        public string DisplayName {
+
             get {
                 /*string output = "";
 

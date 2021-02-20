@@ -5,22 +5,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrackerLibrary;
 
-namespace TrackerUI
-{
-    static class Program
-    {
+namespace TrackerUI {
+    static class Program {
         /// <summary>
         /// Główny punkt wejścia dla aplikacji.
         /// </summary>
         [STAThread]
-        static void Main()
-        {
+        static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new TournamentDashboardForm());
 
             GlobalConfig.InitializeConnections(DatabaseType.TextFile);
-            Application.Run(new CreateTeamForm());
+            Application.Run(new CreateTournamentForm());
         }
     }
 }

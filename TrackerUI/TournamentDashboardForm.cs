@@ -8,12 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TrackerUI
-{
-    public partial class TournamentDashboardForm : Form
-    {
-        public TournamentDashboardForm()
-        {
+namespace TrackerUI {
+    public partial class TournamentDashboardForm : Form {
+        public TournamentDashboardForm() {
             InitializeComponent();
         }
     }

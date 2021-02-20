@@ -12,19 +12,18 @@ using TrackerLibrary;
 using TrackerLibrary.DataAccess;
 using TrackerLibrary.Models;
 
-namespace TrackerUI
-{
-    public partial class CreatePrizeForm : Form
-    {
-        public CreatePrizeForm()
-        {
+namespace TrackerUI {
+    public partial class CreatePrizeForm : Form {
+
+        IPrizeRequester callingForm;
+
+        public CreatePrizeForm(IPrizeRequester caller) {
             InitializeComponent();
+            callingForm = caller;
         }
 
-        private void CreatePrizeButton_Click(object sender, EventArgs e)
-        {
-            if (ValidateForm())
-            {
+        private void CreatePrizeButton_Click(object sender, EventArgs e) {
+            if (ValidateForm()) {
                 PrizeModel model = new PrizeModel(
                     placeNameValue.Text,
                     placeNumberValue.Text,
@@ -33,53 +32,43 @@ namespace TrackerUI
 
                 GlobalConfig.Connection.CreatePrize(model);
 
-                placeNameValue.Text = String.Empty;
-                placeNumberValue.Text = String.Empty;
-                prizeAmountValue.Text = "0";
-                prizePercentageValue.Text = ConfigurationManager.AppSettings["filePath"];
-            }
-            else
-            {
-                MessageBox.Show( ConfigurationManager.AppSettings["filePath"] );
+                callingForm.PrizeComplete(model);
+
+                this.Close();
+            } else {
+                MessageBox.Show(ConfigurationManager.AppSettings["filePath"]);
             }
         }
 
-        private bool ValidateForm()
-        {
-            
+        private bool ValidateForm() {
+
             bool output = true;
             bool placeNumberValidNumber = int.TryParse(placeNumberValue.Text, out int placeNumber);
-            
-            if (placeNumberValidNumber == false)
-            {
+
+            if (placeNumberValidNumber == false) {
                 output = false;
             }
 
-            if (placeNumber < 1)
-            {
+            if (placeNumber < 1) {
                 output = false;
             }
 
-            if (placeNameValue.Text.Length == 0)
-            {
+            if (placeNameValue.Text.Length == 0) {
                 output = false;
             }
 
             bool prizeAmountValid = decimal.TryParse(prizeAmountValue.Text, out decimal prizeAmount);
             bool prizePercentageValid = int.TryParse(prizePercentageValue.Text, out int prizePercentage);
 
-            if (prizeAmountValid == false || prizePercentageValid == false)
-            {
+            if (prizeAmountValid == false || prizePercentageValid == false) {
                 output = false;
             }
 
-            if (prizeAmount <= 0 && prizePercentage <= 0)
-            {
+            if (prizeAmount <= 0 && prizePercentage <= 0) {
                 output = false;
             }
 
-            if (prizePercentage < 0 || prizePercentage > 100)
-            {
+            if (prizePercentage < 0 || prizePercentage > 100) {
                 output = false;
             }
 

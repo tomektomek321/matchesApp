@@ -1,7 +1,5 @@
-﻿namespace TrackerUI
-{
-    partial class TournamentViewerForm
-    {
+﻿namespace TrackerUI {
+    partial class TournamentViewerForm {
         /// <summary>
         /// Wymagana zmienna projektanta.
         /// </summary>
@@ -11,10 +9,8 @@
         /// Wyczyść wszystkie używane zasoby.
         /// </summary>
         /// <param name="disposing">prawda, jeżeli zarządzane zasoby powinny zostać zlikwidowane; Fałsz w przeciwnym wypadku.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -26,8 +22,7 @@
         /// Metoda wymagana do obsługi projektanta — nie należy modyfikować
         /// jej zawartości w edytorze kodu.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             this.headerLabel = new System.Windows.Forms.Label();
             this.tournamentName = new System.Windows.Forms.Label();
             this.roundLabel = new System.Windows.Forms.Label();
