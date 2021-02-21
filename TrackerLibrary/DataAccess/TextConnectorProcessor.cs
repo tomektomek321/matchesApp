@@ -89,11 +89,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
             return output;
         }
 
-        public static List<TournamentModel> ConvertToTournamentModels(
-            this List<string> lines,
-            string teamFileName,
-            string peopleFileName,
-            string prizeFileName) {
+        public static List<TournamentModel> ConvertToTournamentModels(this List<string> lines, string teamFileName, string peopleFileName, string prizeFileName) {
             // Id = 0
             // TournamentName = 1
             // EntryFee = 2
@@ -111,7 +107,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
 
                 TournamentModel tm = new TournamentModel();
                 tm.Id = int.Parse(cols[0]);
-                tm.TournamnetName = cols[1];
+                tm.TournamentName = cols[1];
                 tm.EntryFee = decimal.Parse(cols[2]);
 
                 string[] teamIds = cols[3].Split('|');
@@ -382,7 +378,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
             List<string> lines = new List<string>();
 
             foreach (TournamentModel tm in models) {
-                lines.Add($"{ tm.Id },{ tm.TournamnetName },{ tm.EntryFee },{ ConvertTeamListToString(tm.EnteredTeams) },{ ConvertPrizeListToString(tm.Prizes) },{ ConvertRoundListToString(tm.Rounds) }");
+                lines.Add($"{ tm.Id },{ tm.TournamentName },{ tm.EntryFee },{ ConvertTeamListToString(tm.EnteredTeams) },{ ConvertPrizeListToString(tm.Prizes) },{ ConvertRoundListToString(tm.Rounds) }");
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);
@@ -485,5 +481,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
 
             return output.Trim('|');
         }
+
+
     }
 }

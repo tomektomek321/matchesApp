@@ -37,29 +37,34 @@ namespace TrackerLibrary.Models {
         public string DisplayName {
 
             get {
-                /*string output = "";
+                string output = "";
 
-                foreach (MatchupEntryModel me in Entries)
-                {
-                    if (me.TeamCompeting != null)
-                    {
-                        if (output.Length == 0)
-                        {
+                int counter = 0;
+                int twoNull = 0;
+                foreach (MatchupEntryModel me in Entries) {
+                    if (me.TeamCompeting != null) {
+                        if (output == "") {
                             output = me.TeamCompeting.TeamName;
-                        }
-                        else
-                        {
+                        } else {
                             output += $" vs. { me.TeamCompeting.TeamName }";
                         }
+                    } else {
+                        twoNull++;
                     }
-                    else
-                    {
-                        output = "Matchup Not Yet Determined";
-                        break;
-                    }
-                }*/
 
-                return ""; // return output;
+                    counter++;
+                }
+
+                if(twoNull == 2) {
+                    output = "Not set yet";
+                }else if(counter == 0) {
+                    output = "BYE";
+                } else if(counter == 1) {
+                    output += ": bye";
+                }
+
+
+                return output;
             }
         }
     }

@@ -14,10 +14,11 @@ namespace TrackerUI {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new TournamentDashboardForm());
+            
 
             GlobalConfig.InitializeConnections(DatabaseType.TextFile);
-            Application.Run(new CreateTournamentForm());
+            Application.Run(new TournamentDashboardForm());
+            //Application.Run(new CreateTournamentForm());
         }
     }
 }

@@ -46,7 +46,6 @@
             this.headerLabel.Size = new System.Drawing.Size(129, 30);
             this.headerLabel.TabIndex = 0;
             this.headerLabel.Text = "Tournament:";
-            this.headerLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // tournamentName
             // 
@@ -73,6 +72,7 @@
             this.roundDropDown.Name = "roundDropDown";
             this.roundDropDown.Size = new System.Drawing.Size(121, 38);
             this.roundDropDown.TabIndex = 3;
+            this.roundDropDown.SelectedIndexChanged += new System.EventHandler(this.roundDropDown_SelectedIndexChanged);
             // 
             // unplayedOnlyCheckBox
             // 
@@ -83,6 +83,7 @@
             this.unplayedOnlyCheckBox.TabIndex = 4;
             this.unplayedOnlyCheckBox.Text = "Unplayed Only";
             this.unplayedOnlyCheckBox.UseVisualStyleBackColor = true;
+            this.unplayedOnlyCheckBox.CheckedChanged += new System.EventHandler(this.unplayedOnlyCheckBox_CheckedChanged);
             // 
             // MatchupTextBox
             // 
@@ -92,6 +93,7 @@
             this.MatchupTextBox.Name = "MatchupTextBox";
             this.MatchupTextBox.Size = new System.Drawing.Size(204, 124);
             this.MatchupTextBox.TabIndex = 5;
+            this.MatchupTextBox.SelectedIndexChanged += new System.EventHandler(this.matchupListBox_SelectedIndexChanged);
             // 
             // teamOneName
             // 
@@ -133,7 +135,6 @@
             this.teamTwoScoreLabel.Size = new System.Drawing.Size(64, 30);
             this.teamTwoScoreLabel.TabIndex = 10;
             this.teamTwoScoreLabel.Text = "Score";
-            this.teamTwoScoreLabel.Click += new System.EventHandler(this.teamTwoScoreLabel_Click);
             // 
             // teamTwoName
             // 
@@ -152,6 +153,7 @@
             this.scoreButton.TabIndex = 12;
             this.scoreButton.Text = "Score";
             this.scoreButton.UseVisualStyleBackColor = true;
+            this.scoreButton.Click += new System.EventHandler(this.scoreButton_Click);
             // 
             // TournamentViewerForm
             // 

@@ -80,7 +80,7 @@ namespace TrackerLibrary {
                 totalTeams *= 2;
             }
 
-            output = totalTeams - numberOfTeams;
+            output = Math.Abs(totalTeams - numberOfTeams);
 
             return output;
         }

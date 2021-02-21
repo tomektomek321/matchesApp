@@ -18,7 +18,7 @@ namespace TrackerLibrary.Models {
         /// <summary>
         /// The name given to this tournament.
         /// </summary>
-        public string TournamnetName { get; set; }
+        public string TournamentName { get; set; }
         /// <summary>
         /// The amount of money each team needs to put up to enter.
         /// </summary>

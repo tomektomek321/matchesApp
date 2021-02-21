@@ -120,7 +120,7 @@ namespace TrackerLibrary.DataAccess {
                 .FullFilePath()
                 .LoadFile()
                 .ConvertToTournamentModels(TeamFile, PeopleFile, PrizesFile);
-
+                // id, name, fee, teams, prizeId, 
             int currentId = 1;
 
             if (tournaments.Count > 0) {
@@ -134,6 +134,13 @@ namespace TrackerLibrary.DataAccess {
             tournaments.Add(model);
 
             tournaments.SaveToTournamentFile(TournamentFile);
+        }
+
+        public List<TournamentModel> GetTournament_All() {
+            return TournamentFile
+                .FullFilePath()
+                .LoadFile()
+                .ConvertToTournamentModels(TeamFile, PeopleFile, PrizesFile);
         }
     }
 }
