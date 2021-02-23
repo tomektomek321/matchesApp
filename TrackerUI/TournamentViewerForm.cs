@@ -7,30 +7,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TrackerLibrary.DataAccess;
 using TrackerLibrary.Models;
+using System.IO;
 
 namespace TrackerUI {
     public partial class TournamentViewerForm : Form {
 
         private TournamentModel tournament;
-        int selectedRound;
+        int selectedRound = 1;
         List<int> rounds = new List<int>();
         List<MatchupModel> selectedMatchups = new List<MatchupModel>();
         List<TeamModel> entered = new List<TeamModel>();
 
+        IFileUpdateAccess saverObject = new FileUpdaterProcessor();
+        IDataConnection textConnector = new TextConnector();
+
 
         public TournamentViewerForm(TournamentModel tournamentModel) {
             InitializeComponent();
-            
+
             tournament = tournamentModel;
 
             tournamentName.Text = tournament.TournamentName;
 
-            selectedRound = 1;
-            
-            selectedMatchups = tournament.Rounds[selectedRound - 1];
-            
             LoadRounds();
+
+            selectedMatchups = tournament.Rounds[selectedRound - 1];
 
             WireUpLists();
 
@@ -38,15 +41,16 @@ namespace TrackerUI {
         }
 
         private void LoadFormData() {
-            
+
         }
 
         private void WireUpLists() {
 
             if (unplayedOnlyCheckBox.Checked) {
                 selectedMatchups = (List<MatchupModel>)selectedMatchups.Where(x => x.Winner == null).ToList();
+            } else {
+                selectedMatchups = tournament.Rounds[selectedRound - 1];
             }
-
 
             roundDropDown.DataSource = rounds;
             MatchupTextBox.DataSource = selectedMatchups;
@@ -66,14 +70,15 @@ namespace TrackerUI {
                 }
             }
 
-            //LoadMatchups(1);
+            roundDropDown.DataSource = rounds;
+            
         }
 
         private void roundDropDown_SelectedIndexChanged(object sender, EventArgs e) {
-            selectedMatchups = tournament.Rounds[(int)roundDropDown.SelectedItem - 1];
-            WireUpLists();
 
-            //LoadMatchups((int)roundDropDown.SelectedItem);
+            selectedRound = roundDropDown.SelectedIndex + 1;
+
+            WireUpLists();
         }
 
         private void LoadMatchups(int round) {
@@ -119,7 +124,7 @@ namespace TrackerUI {
         }
 
         private void matchupListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            
+
             LoadMatchup((MatchupModel)MatchupTextBox.SelectedItem);
         }
 
@@ -131,27 +136,60 @@ namespace TrackerUI {
             int.TryParse(teamOneScoreValue.Text, out int team1Goal);
             int.TryParse(teamTwoScoreValue.Text, out int team2Goal);
 
-            if(team1Goal > team2Goal) {
+            if (team1Goal > team2Goal) {
                 setWinner(1);
             } else {
                 setWinner(2);
             }
 
-
-
-
-
-
         }
 
 
         private void setWinner(int team) {
-            int f;
-            TeamModel x = tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex].Entries[team - 1].TeamCompeting;
-            
-            tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex].Winner = x;
+
+            List<MatchupModel> matches = textConnector.getMatchupObject();
+
+
+            MatchupModel thisMatch = tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex];
+            TeamModel thisEntries = tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex].Entries[team - 1].TeamCompeting;
+
+            tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex].Winner = thisEntries;
 
             WireUpLists();
+
+
+            foreach (List<MatchupModel> rounds in tournament.Rounds) {
+
+                if(rounds.First().MatchupRound == (selectedRound)) {
+ 
+                    foreach (MatchupModel match in rounds) {
+
+                        if (match.Id == thisMatch.Id) {
+
+                            match.Winner = thisMatch.Entries[team - 1].TeamCompeting;
+
+                            int count = 0;
+                            foreach (MatchupEntryModel entry in match.Entries) {
+
+                                if (count == 0) {
+                                    entry.Score = double.Parse(teamOneScoreValue.Text);
+                                    count++;
+                                } else if (count == 1) {
+                                    entry.Score = double.Parse(teamTwoScoreValue.Text);
+                                }
+
+                            }
+
+                            break;
+                        }
+
+                    }
+
+                    break;
+                }
+            }
+            string tournamentString = saverObject.ConvertMatchupListToStringAndSaveInFile(tournament);
+            string tournamentString2 = saverObject.ConvertMatchupEntriesListToStringAndSaveInFile(tournament);
 
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,14 @@ namespace TrackerLibrary.DataAccess {
             return model;
         }
 
+        public List<MatchupModel> getMatchupObject() {
+            return MatchupFile.FullFilePath().LoadFile().ConvertToMatchupModels();
+        }
+
+        public List<MatchupEntryModel> getMatchupEntriesObject() {
+            return MatchupEntryFile.FullFilePath().LoadFile().ConvertToMatchupEntryModels();
+        }
+        
 
         /// <summary>
         /// aves a new team to a text file

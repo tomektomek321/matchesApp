@@ -402,7 +402,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
             return output.Trim('|');
         }
 
-        private static string ConvertMatchupListToString(List<MatchupModel> matchups) {
+        public static string ConvertMatchupListToString(List<MatchupModel> matchups) {
             string output = string.Empty;
 
             if (matchups.Count == 0) {
@@ -417,7 +417,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
 
             return output.Trim('|');
         }
-
+        
         private static string ConvertPrizeListToString(List<PrizeModel> prizes) {
             string output = string.Empty;
 

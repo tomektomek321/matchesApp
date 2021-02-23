@@ -49,8 +49,6 @@ namespace TrackerUI {
         }
 
         public void PrizeComplete(PrizeModel model) {
-            // Get back from the form a PrizeModel
-            // Take the PrizeModel and put it into our list of selected prizes
             selectedPrizes.Add(model);
             WireUpLists();
         }

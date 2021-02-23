@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\FileUpdaterProcessor.cs" />
+    <Compile Include="DataAccess\IFileUpdateAccess.cs" />
     <Compile Include="DataAccess\TextConnectorProcessor.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="GlobalConfig.cs" />

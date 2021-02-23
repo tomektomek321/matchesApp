@@ -67,5 +67,9 @@ namespace TrackerLibrary.Models {
                 return output;
             }
         }
+
+        /*public static explicit operator MatchupModel(List<MatchupModel> v) {
+            throw new NotImplementedException();
+        }*/
     }
 }

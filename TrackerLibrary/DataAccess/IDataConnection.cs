@@ -5,10 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TrackerLibrary.Models;
 
-namespace TrackerLibrary.DataAccess
-{
-    public interface IDataConnection
-    {
+namespace TrackerLibrary.DataAccess {
+    public interface IDataConnection {
         PrizeModel CreatePrize(PrizeModel model);
         PersonModel CreatePerson(PersonModel model);
         List<PersonModel> GetPerson_All();
@@ -17,6 +15,8 @@ namespace TrackerLibrary.DataAccess
         List<TeamModel> GetTeam_All();
         List<PrizeModel> GetPrize_All();
         List<TournamentModel> GetTournament_All();
+        List<MatchupModel> getMatchupObject();
+        List<MatchupEntryModel> getMatchupEntriesObject();
 
     }
 }
