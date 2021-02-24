@@ -71,7 +71,7 @@ namespace TrackerUI {
             }
 
             roundDropDown.DataSource = rounds;
-            
+
         }
 
         private void roundDropDown_SelectedIndexChanged(object sender, EventArgs e) {
@@ -148,46 +148,67 @@ namespace TrackerUI {
         private void setWinner(int team) {
 
             List<MatchupModel> matches = textConnector.getMatchupObject();
-
-
+            
             MatchupModel thisMatch = tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex];
             TeamModel thisEntries = tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex].Entries[team - 1].TeamCompeting;
-
-            tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex].Winner = thisEntries;
-
+            
             WireUpLists();
 
+            TeamModel temp1team = null;
+            TeamModel temp2team = null;
+            
+            if (team != 0) {
+                thisMatch.Winner = thisMatch.Entries[team - 1].TeamCompeting;
+            }
 
-            foreach (List<MatchupModel> rounds in tournament.Rounds) {
+            int entryIndex = 0;
+            foreach (MatchupEntryModel entry in thisMatch.Entries) {
+                if (entryIndex == 0) {
+                    entry.Score = double.Parse(teamOneScoreValue.Text);
+                    temp1team = entry.TeamCompeting;
+                    entryIndex++;
+                } else if (entryIndex == 1) {
+                    entry.Score = double.Parse(teamTwoScoreValue.Text);
+                    temp2team = entry.TeamCompeting;
+                }
+            }
 
-                if(rounds.First().MatchupRound == (selectedRound)) {
- 
-                    foreach (MatchupModel match in rounds) {
+            if(tournament.Rounds.Count != selectedRound) {
 
-                        if (match.Id == thisMatch.Id) {
+                foreach (MatchupModel matchUpek in tournament.Rounds[selectedRound]) {
 
-                            match.Winner = thisMatch.Entries[team - 1].TeamCompeting;
+                    foreach (MatchupEntryModel entry in matchUpek.Entries) {
 
-                            int count = 0;
-                            foreach (MatchupEntryModel entry in match.Entries) {
+                        if (entry.ParentMatchup.Id.ToString() == null) {
 
-                                if (count == 0) {
-                                    entry.Score = double.Parse(teamOneScoreValue.Text);
-                                    count++;
-                                } else if (count == 1) {
-                                    entry.Score = double.Parse(teamTwoScoreValue.Text);
-                                }
+                        } else if (entry.ParentMatchup.Id.ToString() != null && (thisMatch.Id == entry.ParentMatchup.Id)) {
+
+                            if (entry.ParentMatchup.Entries.Count == 1) {
+
+                                entry.TeamCompeting = entry.ParentMatchup.Entries[0].TeamCompeting;
+
+                            } else {
+
+                                entry.TeamCompeting = thisMatch.Winner;
 
                             }
 
-                            break;
+                        } else if (entry.ParentMatchup.Entries.Count == 1) {
+                            entry.TeamCompeting = entry.ParentMatchup.Entries[0].TeamCompeting;
                         }
-
                     }
-
-                    break;
                 }
             }
+            
+            
+
+
+
+
+
+
+
+            
             string tournamentString = saverObject.ConvertMatchupListToStringAndSaveInFile(tournament);
             string tournamentString2 = saverObject.ConvertMatchupEntriesListToStringAndSaveInFile(tournament);
 

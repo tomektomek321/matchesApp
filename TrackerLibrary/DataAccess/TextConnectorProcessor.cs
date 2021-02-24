@@ -101,6 +101,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
             List<TeamModel> teams = teamFileName.FullFilePath().LoadFile().ConvertToTeamModels(peopleFileName);
             List<PrizeModel> prizes = prizeFileName.FullFilePath().LoadFile().ConvertToPrizeModels();
             List<MatchupModel> matchups = GlobalConfig.MatchupFile.FullFilePath().LoadFile().ConvertToMatchupModels();
+            List<MatchupEntryModel> matchupsEntry = GlobalConfig.MatchupEntryFile.FullFilePath().LoadFile().ConvertToMatchupEntryModels();
 
             foreach (string line in lines) {
                 string[] cols = line.Split(',');
@@ -132,7 +133,18 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
                     List<MatchupModel> ms = new List<MatchupModel>();
 
                     foreach (string matchupModelTextId in msText) {
-                        ms.Add(matchups.Where(x => x.Id == int.Parse(matchupModelTextId)).First());
+
+                        //if(matchupModelTextId)
+                        MatchupModel a = matchups.Where(x => x.Id == int.Parse(matchupModelTextId)).First();
+
+                        if(a.Winner != null) {
+
+                        }
+
+                        ms.Add(a);
+
+
+
                     }
 
                     tm.Rounds.Add(ms);

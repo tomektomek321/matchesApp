@@ -29,7 +29,6 @@ namespace TrackerLibrary.DataAccess {
             return output.Trim('|');
         }
 
-
         public static string ConvertMatchupListToString(List<MatchupModel> matchups) {
             string output = string.Empty;
 
@@ -54,6 +53,8 @@ namespace TrackerLibrary.DataAccess {
             string teamNames;
             int indexik = 0;
 
+            int lastRound = tournament.Rounds.Count;
+
             foreach (List<MatchupModel> matchups in tournament.Rounds) {
                 foreach (MatchupModel m in matchups) {
                     if (m.Winner == null) {
@@ -69,21 +70,14 @@ namespace TrackerLibrary.DataAccess {
 
                         if (indexik == 1) {
                             score1 = entry.Score;
-
-                            if (entry.TeamCompeting == null || entry.TeamCompeting.Id == 0) {
-                                teamNames = "";
-                            } else {
-                                teamNames = (entry.Id).ToString();
-                            }
-                        
+                            
+                             teamNames = (entry.Id).ToString();
+                            
                         } else if (indexik == 2) {
                             score2 = entry.Score;
-
-                            if (entry.TeamCompeting == null || entry.TeamCompeting.Id == 0) {
-                                teamNames += "";
-                            } else {
-                                teamNames += $"|{(entry.Id).ToString()}";
-                            }
+                            
+                             teamNames += $"|{(entry.Id).ToString()}";
+                            
                         }
                     }
                 
@@ -99,18 +93,16 @@ namespace TrackerLibrary.DataAccess {
         }
 
         public string ConvertMatchupEntriesListToStringAndSaveInFile(TournamentModel tournament) {
-            // Id = 0, TeamCompeting = 1, Score = 2, ParentMatchup = 3    entry
+            // Id = 0, TeamCompeting = 1, Score = 2, ParentMatchup = 3   entry
             List<string> linesEntiries = new List<string>();
             string teamNames;
-            int? newId = null;
+            //int newId;
             int indexik = 0;
             int idCounter = 0;
             string parent;
 
             foreach (List<MatchupModel> matchups in tournament.Rounds) {
-
-                //if(matchups)
-
+                
                 foreach (MatchupModel m in matchups) {
                     int isNew = 0;
                     indexik = 0;
@@ -120,17 +112,13 @@ namespace TrackerLibrary.DataAccess {
                         int score;
                         indexik++;
                         idCounter++;
-
-                        if (entry.TeamCompeting != null) {
-                            newId = entry.TeamCompeting.Id;
-                        }
-
+                        
                         score = int.Parse(entry.Score.ToString());
 
                         if (entry.TeamCompeting == null || entry.TeamCompeting.Id == 0) {
                             teamNames = "";
                         } else {
-                            teamNames = (entry.Id).ToString();
+                            teamNames = (entry.TeamCompeting.Id).ToString();
                         }
 
                         if (entry.ParentMatchup == null) {
@@ -139,7 +127,7 @@ namespace TrackerLibrary.DataAccess {
                             parent = entry.ParentMatchup.Id.ToString();
                         }
 
-                        linesEntiries.Add($"{ entry.Id },{ newId },{ score },{ parent }");
+                        linesEntiries.Add($"{ entry.Id },{ teamNames },{ score },{ parent }");
 
                     }
 

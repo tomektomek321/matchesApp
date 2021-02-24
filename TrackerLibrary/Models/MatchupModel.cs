@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TrackerLibrary.Models {
+
     /// <summary>
     /// Represents one match in the tournament.
     /// </summary>
@@ -72,4 +73,5 @@ namespace TrackerLibrary.Models {
             throw new NotImplementedException();
         }*/
     }
+
 }
