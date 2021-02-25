@@ -58,10 +58,8 @@ namespace TrackerLibrary.Models {
 
                 if(twoNull == 2) {
                     output = "Not set yet";
-                }else if(counter == 0) {
-                    output = "BYE";
-                } else if(counter == 1) {
-                    output += ": bye";
+                }else if( (counter == 0) || (counter == 1) ) {
+                    output += " (BYE)";
                 }
 
 
@@ -69,9 +67,6 @@ namespace TrackerLibrary.Models {
             }
         }
 
-        /*public static explicit operator MatchupModel(List<MatchupModel> v) {
-            throw new NotImplementedException();
-        }*/
     }
 
 }

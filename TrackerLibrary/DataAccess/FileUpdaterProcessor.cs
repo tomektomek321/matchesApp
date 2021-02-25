@@ -96,7 +96,6 @@ namespace TrackerLibrary.DataAccess {
             // Id = 0, TeamCompeting = 1, Score = 2, ParentMatchup = 3   entry
             List<string> linesEntiries = new List<string>();
             string teamNames;
-            //int newId;
             int indexik = 0;
             int idCounter = 0;
             string parent;
@@ -131,16 +130,11 @@ namespace TrackerLibrary.DataAccess {
 
                     }
 
-                    if(isNew == 0) {
+                    /*if(isNew == 0) {
                         linesEntiries.Add($"{ ++idCounter },,0,");
-                        
                     } else if(isNew > 0) {
-
-
-                    }
-
-
-
+                    }*/
+                    
                 }
             }
 

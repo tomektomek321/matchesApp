@@ -41,7 +41,7 @@ namespace TrackerUI {
             prizesListBox.DisplayMember = "PlaceName";
         }
 
-        private void createPrizeButton_Click(object sender, System.EventArgs e) {
+        private void createPrizeButton_Click(object sender, EventArgs e) {
             // Call the CreatePrizeForm
             CreatePrizeForm frm = new CreatePrizeForm(this);
 
@@ -57,7 +57,7 @@ namespace TrackerUI {
 
         }
 
-        private void addTeamButton_Click(object sender, System.EventArgs e) {
+        private void addTeamButton_Click(object sender, EventArgs e) {
             TeamModel t = (TeamModel)selectTeamDropDown.SelectedItem;
 
             if (t != null) {
@@ -78,7 +78,7 @@ namespace TrackerUI {
             frm.Show();
         }
 
-        private void removeSelectedPlayersButton_Click(object sender, System.EventArgs e) {
+        private void removeSelectedPlayersButton_Click(object sender, EventArgs e) {
             TeamModel t = (TeamModel)tournamentTeamsListBox.SelectedItem;
 
             if (t != null) {
@@ -89,7 +89,7 @@ namespace TrackerUI {
             }
         }
 
-        private void removeSelectedPrizesButton_Click(object sender, System.EventArgs e) {
+        private void removeSelectedPrizesButton_Click(object sender, EventArgs e) {
             PrizeModel p = (PrizeModel)prizesListBox.SelectedItem;
 
             if (p != null) {
@@ -99,7 +99,7 @@ namespace TrackerUI {
             }
         }
 
-        private void createTournamentButton_Click(object sender, System.EventArgs e) {
+        private void createTournamentButton_Click(object sender, EventArgs e) {
             // Validate data
             decimal fee = 0;
 
