@@ -10,8 +10,8 @@ using System.Configuration;
 namespace TrackerLibrary.DataAccess {
     public class FileUpdaterProcessor : IFileUpdateAccess {
 
-        private const string MatchupFile = "MatchupModel.csv";
-        private const string MatchupEntryFile = "MatchupEntryModel.csv";
+        private const string MatchupFile = "MatchupModel";
+        private const string MatchupEntryFile = "MatchupEntryModel";
 
         private static string ConvertMatchupEntryListToString(List<MatchupEntryModel> entries) {
             string output = string.Empty;
@@ -86,9 +86,11 @@ namespace TrackerLibrary.DataAccess {
                 }
             }
 
-            File.Delete($"{ ConfigurationManager.AppSettings["filePath"] }\\{ MatchupFile }");
+            string fileName = MatchupFile + "" + tournament.Id + ".csv";
+
+            File.Delete($"{ ConfigurationManager.AppSettings["filePath"] }\\{ fileName }");
             
-            File.WriteAllLines($"{ ConfigurationManager.AppSettings["filePath"] }\\{ MatchupFile }", lines);
+            File.WriteAllLines($"{ ConfigurationManager.AppSettings["filePath"] }\\{ fileName }", lines);
             return "";
         }
 
@@ -138,9 +140,11 @@ namespace TrackerLibrary.DataAccess {
                 }
             }
 
-            File.Delete($"{ ConfigurationManager.AppSettings["filePath"] }\\{ MatchupEntryFile }");
+            string fileName = MatchupEntryFile + "" + tournament.Id + ".csv";
 
-            File.WriteAllLines($"{ ConfigurationManager.AppSettings["filePath"] }\\{ MatchupEntryFile }", linesEntiries);
+            File.Delete($"{ ConfigurationManager.AppSettings["filePath"] }\\{ fileName }");
+
+            File.WriteAllLines($"{ ConfigurationManager.AppSettings["filePath"] }\\{ fileName }", linesEntiries);
             
             return "";
         }

@@ -15,8 +15,10 @@ namespace TrackerLibrary.DataAccess {
         List<TeamModel> GetTeam_All();
         List<PrizeModel> GetPrize_All();
         List<TournamentModel> GetTournament_All();
+        List<TournamentModel> GetTournament_AllBasics();
         List<MatchupModel> getMatchupObject();
         List<MatchupEntryModel> getMatchupEntriesObject();
+        void getRoundsOfTournament(TournamentModel model);
 
     }
 }

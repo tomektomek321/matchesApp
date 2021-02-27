@@ -145,71 +145,103 @@ namespace TrackerUI {
         }
 
 
-        private void setWinner(int team) {
+        private void setWinner(int winnerEntryIndex) {
 
             List<MatchupModel> matches = textConnector.getMatchupObject();
-            
+
             MatchupModel thisMatch = tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex];
-            TeamModel thisEntries = tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex].Entries[team - 1].TeamCompeting;
-            
+            TeamModel thisEntries = tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex].Entries[winnerEntryIndex - 1].TeamCompeting;
+
             WireUpLists();
 
             TeamModel temp1team = null;
             TeamModel temp2team = null;
-            
-            if (team != 0) {
-                thisMatch.Winner = thisMatch.Entries[team - 1].TeamCompeting;
+
+            bool winnerAlready = false;
+            if (winnerEntryIndex != 0) {
+                if (thisMatch.Winner != null) {
+                    winnerAlready = true;
+                }
+
+                thisMatch.Winner = thisMatch.Entries[winnerEntryIndex - 1].TeamCompeting;
             }
 
+            bool needsNextRoundUpdate = false;
+
+            //if(thisMatch.Winner !=null && thisMatch.Winner.Id)
+
+
+            //int tempResult = thisMatch.Winner
+
+
+            double temp1score = 0;
+            double temp2score = 0;
             int entryIndex = 0;
             foreach (MatchupEntryModel entry in thisMatch.Entries) {
                 if (entryIndex == 0) {
+                    if (winnerAlready) {
+                        temp1score = entry.Score;
+                    }
                     entry.Score = double.Parse(teamOneScoreValue.Text);
                     temp1team = entry.TeamCompeting;
                     entryIndex++;
                 } else if (entryIndex == 1) {
+                    if (winnerAlready) {
+                        temp2score = entry.Score;
+                    }
+
                     entry.Score = double.Parse(teamTwoScoreValue.Text);
                     temp2team = entry.TeamCompeting;
                 }
             }
 
-            if(tournament.Rounds.Count != selectedRound) {
+            if (winnerAlready) {
+                double newWinner = (temp1score > temp2score) ? 1 : 2;
 
-                foreach (MatchupModel matchUpek in tournament.Rounds[selectedRound]) {
+                if (newWinner != winnerEntryIndex) {
+                    needsNextRoundUpdate = true;
+                }
 
-                    foreach (MatchupEntryModel entry in matchUpek.Entries) {
 
-                        if (entry.ParentMatchup.Id.ToString() == null) {
 
-                        } else if (entry.ParentMatchup.Id.ToString() != null && (thisMatch.Id == entry.ParentMatchup.Id)) {
+            }
 
-                            if (entry.ParentMatchup.Entries.Count == 1) {
 
+            if (needsNextRoundUpdate) {
+                if (tournament.Rounds.Count != selectedRound) {
+
+                    foreach (MatchupModel matchUpek in tournament.Rounds[selectedRound]) {
+
+                        foreach (MatchupEntryModel entry in matchUpek.Entries) {
+
+                            if (entry.ParentMatchup != null && entry.ParentMatchup.Id.ToString() == null) {
+
+                            } else if (entry.ParentMatchup.Id.ToString() != null && (thisMatch.Id == entry.ParentMatchup.Id)) {
+
+                                if (entry.ParentMatchup.Entries.Count == 1) {
+
+                                    entry.TeamCompeting = entry.ParentMatchup.Entries[0].TeamCompeting;
+
+                                } else {
+
+                                    entry.TeamCompeting = thisMatch.Winner;
+
+                                }
+
+                            } else if (entry.ParentMatchup.Entries.Count == 1) {
                                 entry.TeamCompeting = entry.ParentMatchup.Entries[0].TeamCompeting;
-
-                            } else {
-
-                                entry.TeamCompeting = thisMatch.Winner;
-
                             }
-
-                        } else if (entry.ParentMatchup.Entries.Count == 1) {
-                            entry.TeamCompeting = entry.ParentMatchup.Entries[0].TeamCompeting;
                         }
                     }
                 }
             }
-            
-            
 
-
-
-
-
+            //if(needsNextRoundUpdate) {
+                string tournamentString = saverObject.ConvertMatchupListToStringAndSaveInFile(tournament);
+            //}
 
 
             
-            string tournamentString = saverObject.ConvertMatchupListToStringAndSaveInFile(tournament);
             string tournamentString2 = saverObject.ConvertMatchupEntriesListToStringAndSaveInFile(tournament);
 
         }

@@ -73,6 +73,14 @@ namespace TrackerLibrary {
         }
 
         private static int NumberOfByes(int rounds, int numberOfTeams) {
+            double powek = double.Parse(2.ToString());
+            double x = double.Parse(numberOfTeams.ToString());
+
+            double numberOfMatches = Math.Pow(powek, x);
+
+
+
+
             int output = 0;
             int totalTeams = 1;
 
@@ -92,6 +100,7 @@ namespace TrackerLibrary {
             while (val < teamCount) {
                 output++;
                 val *= 2;
+                Console.WriteLine(output);
             }
 
             return output;

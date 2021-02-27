@@ -13,7 +13,8 @@ using TrackerLibrary.Models;
 namespace TrackerUI {
     public partial class TournamentDashboardForm : Form {
 
-        List<TournamentModel> tournaments = GlobalConfig.Connection.GetTournament_All();
+        //List<TournamentModel> tournaments = GlobalConfig.Connection.GetTournament_All();
+        List<TournamentModel> tournamentsBasic = GlobalConfig.Connection.GetTournament_AllBasics();
 
         public TournamentDashboardForm() {
             InitializeComponent();
@@ -23,6 +24,12 @@ namespace TrackerUI {
 
         private void loadTournamentButton_Click(object sender, EventArgs e) {
             TournamentModel tm = (TournamentModel)loadExistingTournamentDropDown.SelectedItem;
+
+            if(tm.Rounds.Count == 0) {
+                GlobalConfig.Connection.getRoundsOfTournament(tm);
+            }
+
+            
             TournamentViewerForm frm = new TournamentViewerForm(tm);
             frm.Show();
         }
@@ -33,7 +40,7 @@ namespace TrackerUI {
         }
 
         private void WireUpLists() {
-            loadExistingTournamentDropDown.DataSource = tournaments;
+            loadExistingTournamentDropDown.DataSource = tournamentsBasic;
             loadExistingTournamentDropDown.DisplayMember = "TournamentName";
         }
     }
