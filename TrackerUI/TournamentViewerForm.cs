@@ -138,7 +138,7 @@ namespace TrackerUI {
 
             if (team1Goal > team2Goal) {
                 setWinner(1);
-            } else {
+            } else if (team1Goal < team2Goal) {
                 setWinner(2);
             }
 
@@ -147,7 +147,7 @@ namespace TrackerUI {
 
         private void setWinner(int winnerEntryIndex) {
 
-            List<MatchupModel> matches = textConnector.getMatchupObject();
+            //List<MatchupModel> matches = textConnector.getMatchupObject();
 
             MatchupModel thisMatch = tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex];
             TeamModel thisEntries = tournament.Rounds[selectedRound - 1][MatchupTextBox.SelectedIndex].Entries[winnerEntryIndex - 1].TeamCompeting;
@@ -158,21 +158,15 @@ namespace TrackerUI {
             TeamModel temp2team = null;
 
             bool winnerAlready = false;
-            if (winnerEntryIndex != 0) {
-                if (thisMatch.Winner != null) {
-                    winnerAlready = true;
-                }
 
+            if (thisMatch.Winner != null) {
+                winnerAlready = true;
+            } else {
                 thisMatch.Winner = thisMatch.Entries[winnerEntryIndex - 1].TeamCompeting;
             }
-
+            
             bool needsNextRoundUpdate = false;
-
-            //if(thisMatch.Winner !=null && thisMatch.Winner.Id)
-
-
-            //int tempResult = thisMatch.Winner
-
+            
 
             double temp1score = 0;
             double temp2score = 0;

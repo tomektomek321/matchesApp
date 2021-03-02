@@ -130,5 +130,8 @@ namespace TrackerUI {
             GlobalConfig.Connection.CreateTournament(tm);
         }
 
+        private void CreateTournamentForm_Load_1(object sender, EventArgs e) {
+
+        }
     }
 }
