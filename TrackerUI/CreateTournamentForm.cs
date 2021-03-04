@@ -15,7 +15,6 @@ namespace TrackerUI {
 
         List<TeamModel> availableTeams = GlobalConfig.Connection.GetTeam_All();
         List<TeamModel> selectedTeams = new List<TeamModel>();
-        //List<PrizeModel> selectedPrizes = new List<PrizeModel>();
         List<PrizeModel> selectedPrizes = GlobalConfig.Connection.GetPrize_All();
 
 
@@ -42,7 +41,7 @@ namespace TrackerUI {
         }
 
         private void createPrizeButton_Click(object sender, EventArgs e) {
-            // Call the CreatePrizeForm
+            
             CreatePrizeForm frm = new CreatePrizeForm(this);
 
             frm.Show();
@@ -112,21 +111,16 @@ namespace TrackerUI {
                     MessageBoxIcon.Error);
                 return;
             }
-
-            // Create our Tournament
+            
             TournamentModel tm = new TournamentModel {
                 TournamentName = tournamentNameValue.Text,
                 EntryFee = fee,
                 Prizes = selectedPrizes,
                 EnteredTeams = selectedTeams
             };
-
-            // TODO - Wire our Matchups
+            
             TournamentLogic.CreateRounds(tm);
-
-            // Create Tournament entry
-            // Create all of the Prize entries
-            // Create all of the Team entries
+            
             GlobalConfig.Connection.CreateTournament(tm);
         }
 

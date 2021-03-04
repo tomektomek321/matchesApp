@@ -14,8 +14,9 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
 
         private static List<string> matchupsLines;
         private static List<string> matchupsEntryLines;
-        
-                                                                                
+
+        private static TournamentModel modelUsed;
+                                                                        
         public static string FullFilePath(this string fileName) {
             return $"{ ConfigurationManager.AppSettings["filePath"] }\\{ fileName }";
         }
@@ -118,11 +119,13 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
 
             return output;
         }
-
+        
         public static void getRoundsOfTournament(this List<string> lines, TournamentModel model, string teamFileName, string peopleFileName, string prizeFileName) {
 
             List<TeamModel> teams = teamFileName.FullFilePath().LoadFile().ConvertToTeamModels(peopleFileName);
             List<PrizeModel> prizes = prizeFileName.FullFilePath().LoadFile().ConvertToPrizeModels();
+
+            modelUsed = model;
             
             TournamentModel output = new TournamentModel();
             
@@ -192,27 +195,27 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
             foreach (string line in lines) {
                 string[] cols = line.Split(',');
 
-                TournamentModel tm = new TournamentModel();
-                tm.Id = int.Parse(cols[0]);
-                tm.TournamentName = cols[1];
-                tm.EntryFee = decimal.Parse(cols[2]);
+                modelUsed = new TournamentModel();
+                modelUsed.Id = int.Parse(cols[0]);
+                modelUsed.TournamentName = cols[1];
+                modelUsed.EntryFee = decimal.Parse(cols[2]);
 
                 string[] teamIds = cols[3].Split('|');
 
                 foreach (string Id in teamIds) {
-                    tm.EnteredTeams.Add(teams.Where(x => x.Id == int.Parse(Id)).First());
+                    modelUsed.EnteredTeams.Add(teams.Where(x => x.Id == int.Parse(Id)).First());
                 }
 
                 if (cols[4].Length > 0) {
                     string[] prizeIds = cols[4].Split('|');
 
                     foreach (string Id in prizeIds) {
-                        tm.Prizes.Add(prizes.Where(x => x.Id == int.Parse(Id)).First());
+                        modelUsed.Prizes.Add(prizes.Where(x => x.Id == int.Parse(Id)).First());
                     }
                 }
 
-                string newMatchupFile = GlobalConfig.MatchupFile.Substring(0, 12) + "" + tm.Id + ".csv";
-                matchups = newMatchupFile.FullFilePath().LoadFile().ConvertToMatchupModels(tm.Id);
+                string newMatchupFile = GlobalConfig.MatchupFile.Substring(0, 12) + "" + modelUsed.Id + ".csv";
+                matchups = newMatchupFile.FullFilePath().LoadFile().ConvertToMatchupModels(modelUsed.Id);
 
                 string[] rounds = cols[5].Split('|');
 
@@ -228,10 +231,10 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
                         
                     }
 
-                    tm.Rounds.Add(ms);
+                    modelUsed.Rounds.Add(ms);
                 }
 
-                output.Add(tm);
+                output.Add(modelUsed);
             }
 
             return output;
@@ -271,15 +274,17 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
 
             matchupsLines = new List<string>();
             matchupsEntryLines = new List<string>();
-
-            //int fileId = model.Id;
             
             foreach (List<MatchupModel> round in model.Rounds) {
                 foreach (MatchupModel matchup in round) {
                     matchup.convertMatchUpToString(matchupFile, matchupEntryFile);
                 }
             }
+
+            File.Delete(matchupFile.FullFilePath());
+            File.Delete(matchupEntryFile.FullFilePath());
             
+
             File.WriteAllLines(matchupFile.FullFilePath(), matchupsLines);
             File.WriteAllLines(matchupEntryFile.FullFilePath(), matchupsEntryLines);
         }
@@ -381,7 +386,9 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
         }
 
         private static MatchupModel LookupMatchupById(int id) {
-            List<string> matchups = GlobalConfig.MatchupFile.FullFilePath().LoadFile();
+            string fileName = GlobalConfig.MatchupFile.Substring(0, 12) + "" + modelUsed.Id + ".csv";
+
+            List<string> matchups = fileName.FullFilePath().LoadFile();
 
             foreach (string matchup in matchups) {
                 string[] cols = matchup.Split(',');
@@ -537,7 +544,6 @@ namespace TrackerLibrary.DataAccess.TextHelpers {
 
             return output.Trim('|');
         }
-
-
+        
     }
 }

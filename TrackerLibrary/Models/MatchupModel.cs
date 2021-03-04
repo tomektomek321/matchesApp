@@ -40,29 +40,37 @@ namespace TrackerLibrary.Models {
             get {
                 string output = "";
 
-                int counter = 0;
-                int twoNull = 0;
-                foreach (MatchupEntryModel me in Entries) {
-                    if (me.TeamCompeting != null) {
-                        if (output == "") {
-                            output = me.TeamCompeting.TeamName;
-                        } else {
-                            output += $" vs. { me.TeamCompeting.TeamName }";
-                        }
-                    } else {
-                        twoNull++;
+                if(Entries.Count == 2) {
+                    string temp1team = "";
+                    string temp2team = "";
+                    
+                    if(Entries[0].TeamCompeting != null) {
+                        temp1team = Entries[0].TeamCompeting.TeamName;
                     }
 
-                    counter++;
-                }
+                    if (Entries[1].TeamCompeting != null) {
+                        temp2team = Entries[1].TeamCompeting.TeamName;
+                    }
 
-                if(twoNull == 2) {
-                    output = "Not set yet";
-                }else if( (counter == 0) || (counter == 1) ) {
+                    if (temp1team != "" && temp2team != "") {
+                        output = Entries[0].TeamCompeting.TeamName;
+                        output += " vs ";
+                        output += Entries[1].TeamCompeting.TeamName;
+                    } else if (temp1team != "" && temp2team == "") {
+                        output = temp1team + " vs (??)";
+                    } else if (temp1team == "" && temp2team != "") {
+                        output = temp2team + " vs (??)";
+                    } else {
+                        output = "NOT SET YET";
+                    }
+                    
+                } else if (Entries.Count == 1) {
+                    output = Entries[0].TeamCompeting.TeamName;
                     output += " (BYE)";
+                } else {
+                    output = "NOT SET YET";
                 }
-
-
+                
                 return output;
             }
         }

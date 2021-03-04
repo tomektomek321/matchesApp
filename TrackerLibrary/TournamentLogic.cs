@@ -8,12 +8,7 @@ using TrackerLibrary.Models;
 namespace TrackerLibrary {
 
     public static class TournamentLogic {
-
-        // Order our list randomly of teams
-        // Check if it is big enough - if not, add in byes - 2*2*2*2 - 2^4
-        // Create our first round of matchups
-        // Create every round after that - 8 matchups - 4 matchups - 2 matchups - 1 matchup
-
+        
         private static int matchEntryId = 0;
         private static int matchId = 0;
 
@@ -70,8 +65,20 @@ namespace TrackerLibrary {
 
             while (round <= rounds) {
                 foreach (MatchupModel match in previousRound) {
-                    currMatchup.Entries.Add(new MatchupEntryModel { ParentMatchup = match, Id = matchEntryId++ });
-
+                    if (round == 2 && match.Entries.Count == 1) {
+                        match.Winner = match.Entries[0].TeamCompeting;
+                        currMatchup.Entries.Add(new MatchupEntryModel {
+                            ParentMatchup = match,
+                            Id = matchEntryId++,
+                            TeamCompeting = match.Winner
+                        });
+                    } else {
+                        currMatchup.Entries.Add(new MatchupEntryModel {
+                            ParentMatchup = match,
+                            Id = matchEntryId++
+                        });
+                    }
+                    
                     if (currMatchup.Entries.Count > 1) {
                         currMatchup.MatchupRound = round;
                         currRound.Add(currMatchup);
@@ -90,40 +97,43 @@ namespace TrackerLibrary {
         private static List<MatchupModel> CreateFirstround(int byes, List<TeamModel> teams, int[] tabOfByes) {
 
             List<MatchupModel> output = new List<MatchupModel>();
-
-
+            
             int addedTeams = 0;
+            bool matchHasBye = false;
+            int[] tabOfMatchesWithByes = new int[tabOfByes.Length];
+            int tabIndex = 0;
+
             for(int i=0; i < tabOfByes.Length; i++, i++) {
 
                 MatchupModel curr = new MatchupModel { MatchupRound = 1, Id = matchId++ };
 
                 if (tabOfByes[i] != 1) {
                     curr.Entries.Add(new MatchupEntryModel { TeamCompeting = teams[addedTeams++], Id = matchEntryId++ });
+                    
+                } else {
+                    matchHasBye = true;
                 }
 
                 if (tabOfByes[i + 1] != 1) {
                     curr.Entries.Add(new MatchupEntryModel { TeamCompeting = teams[addedTeams++], Id = matchEntryId++ });
+                    
+                } else {
+                    matchHasBye = true;
+                }
+
+                if(matchHasBye) {
+                    tabOfMatchesWithByes[tabIndex++] = matchId - 1;
                 }
 
 
+                matchHasBye = false;
                 output.Add(curr);
-                /*if (byes > 0) {
-                    if(tabOfByes[i] == 1) {
-                        curr.Entries.Add(new MatchupEntryModel { TeamCompeting = teams[i] });
-                    }
-                    curr.MatchupRound = 1;
-                    output.Add(curr);
-                    curr = new MatchupModel();
-                    if (byes > 0) {
-                        byes--;
-                    }
-                }*/
             }
 
             return output;
         }
 
-        private static int[] NumberOfFirstRoundMatchesAndByes(/*int rounds, */int numberOfTeams) {
+        private static int[] NumberOfFirstRoundMatchesAndByes(int numberOfTeams) {
 
             int numOfTeams = numberOfTeams;
 
@@ -141,31 +151,9 @@ namespace TrackerLibrary {
 
             int byes = firstRoundMatchesCount - numOfTeams;
 
-            //firstRoundMatchesCount = firstRoundMatchesCount / 2;
-
             int[] ret = new int[] { firstRoundMatchesCount, byes };
 
             return ret;
-
-
-            /*double powek = double.Parse(2.ToString());
-            double x = double.Parse(numberOfTeams.ToString());
-
-            double numberOfMatches = Math.Pow(powek, x);
-
-
-
-
-            int output = 0;
-            int totalTeams = 1;
-
-            for (int i = 1; i < rounds; i++) {
-                totalTeams *= 2;
-            }
-
-            output = Math.Abs(totalTeams - numberOfTeams);
-
-            return output;*/
         }
 
         private static int FindNumberOfRounds(int teamCount) {

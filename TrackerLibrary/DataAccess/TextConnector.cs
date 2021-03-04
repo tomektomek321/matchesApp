@@ -125,6 +125,33 @@ namespace TrackerLibrary.DataAccess {
             tournaments.SaveToTournamentFile(TournamentFile);
         }
 
+        public void UpdateTournament(TournamentModel model) {
+            List<TournamentModel> tournaments = TournamentFile
+                .FullFilePath()
+                .LoadFile()
+                .ConvertToTournamentModels(TeamFile, PeopleFile, PrizesFile);
+            // id, name, fee, teams, prizeId, 
+            int currentId = 1;
+
+            if (tournaments.Count > 0) {
+                currentId = tournaments.OrderByDescending(x => x.Id).First().Id;
+            }
+
+            string newMatchupFile = MatchupFile.Substring(0, 12) + "" + currentId + ".csv";
+            string newMatchupEntryFile = MatchupEntryFile.Substring(0, 17) + "" + currentId + ".csv";
+
+            model.Id = currentId;
+
+            model.SaveRoundsToFile(newMatchupFile, newMatchupEntryFile);
+
+            int index = tournaments.FindIndex(x => x.Id == model.Id);
+            tournaments.RemoveAt(index);
+            tournaments.Add(model);
+            
+
+            tournaments.SaveToTournamentFile(TournamentFile);
+        }
+
         public List<TournamentModel> GetTournament_All() {
             return TournamentFile
                 .FullFilePath()
